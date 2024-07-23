@@ -1,0 +1,40 @@
+name: Generate test using RoostGPT
+
+on:
+  pull_request: # Trigger the workflow on a pull request
+
+env:
+  ROOST_TOKEN: ${{ secrets.ROOST_TOKEN }}
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  VERTEX_BEARER_TOKEN: ${{ secrets.VERTEX_BEARER_TOKEN }}
+  AZURE_OPENAI_KEY: ${{ secrets.AZURE_OPENAI_KEY }}
+  JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
+  AZURE_TOKEN: ${{ secrets.AZURE_TOKEN }}
+  LOG_ELASTICSEARCH_TOKEN: ${{ secrets.LOG_ELASTICSEARCH_TOKEN }}
+  LOG_ELASTICSEARCH_API_KEY: ${{ secrets.LOG_ELASTICSEARCH_API_KEY }}
+  CLAUDE_AI_API_KEY: ${{ secrets.CLAUDE_AI_API_KEY }}
+  DBRX_AUTH_TOKEN: ${{ secrets.DBRX_AUTH_TOKEN }}
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+    container: 
+      image: zbio/roostgpt-cli:latest
+      credentials:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+      options: --user root --name roostgpt
+      volumes:                                                  # Without checkout code, the workspace is initially empty, so volume mounts will be empty
+        - "${{github.workspace}}:/workspaces"
+        - "${{github.workspace}}/config:/roost/config"
+    steps:
+      - name: Checkout code                                     # Checks out the current repo code into the github workspace
+        uses: actions/checkout@v2
+
+      - name: Restart RoostGPT                                  # After the checkout step, github workspace is now populated with code, restart the roostgpt-cli container to mount volumes with data 
+        uses: docker://docker
+        with:
+          args: docker restart roostgpt
+
+      - name: Run tests                                         # Trigger test generation
+        run: /usr/local/bin/roostgpt test create -c /roost/config/default.env
