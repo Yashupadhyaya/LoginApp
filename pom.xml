@@ -99,6 +99,20 @@
       <version>0.0.40</version>
       <!--Dependency added by RoostGPT-->
     </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+      <version>2.13.0</version>
+      <scope>compile</scope>
+      <!--Dependency added by RoostGPT-->
+    </dependency>
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-annotations</artifactId>
+      <version>2.1.11</version>
+      <scope>compile</scope>
+      <!--Dependency added by RoostGPT-->
+    </dependency>
     <!--SpringDoc dependencies -->
     <dependency>
       <groupId>org.springdoc</groupId>
