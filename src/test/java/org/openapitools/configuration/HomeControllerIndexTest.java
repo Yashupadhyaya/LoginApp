@@ -41,6 +41,8 @@ Execution:
   Assert: Use JUnit assertions to compare the actual result from the index method with the expected outcome "redirect:swagger-ui.html".
 Validation:
   The assertion aims to verify that the index method handles null return values correctly. This test is significant as it ensures that the application can handle null and unexpected scenarios gracefully.
+
+roost_feedback [11/14/2024, 2:44:28 AM]:Add more comments to the test
 */
 
 // ********RoostGPT********
@@ -63,6 +65,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @SpringBootTest
 public class HomeControllerIndexTest {
 
+	// Test case to verify correct redirection
 	@Test
 	@Tag("valid")
 	public void verifyIndexRedirection() {
@@ -73,6 +76,7 @@ public class HomeControllerIndexTest {
 		assertEquals(expected, actual);
 	}
 
+	// Test case to check redirection when unexpected result is returned
 	@Test
 	@Tag("invalid")
 	public void checkIndexRedirectionForUnexpectedResult() {
@@ -83,6 +87,7 @@ public class HomeControllerIndexTest {
 		assertEquals(expected, actual);
 	}
 
+	// Test case to check redirection when null is returned
 	@Test
 	@Tag("boundary")
 	public void checkIndexRedirectionForNullResult() {
