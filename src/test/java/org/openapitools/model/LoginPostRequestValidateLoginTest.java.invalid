@@ -1,0 +1,108 @@
+
+
+package org.openapitools.model;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Tag;
+import static org.junit.jupiter.api.Assertions.*;
+import java.net.URI;
+import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.*;
+import javax.annotation.Generated;
+
+public class LoginPostRequestValidateLoginTest {
+    public void testValidUsernameAndPassword() {
+        LoginPostRequest loginRequest = new LoginPostRequest();
+        loginRequest.username = "validUser";
+        loginRequest.password = "Valid123";
+        boolean result = loginRequest.validateLogin();
+        assertTrue(result, "Expected true for valid username and password");
+    }
+    @Tag("invalid")
+    public void testUsernameLengthLessThanSix() {
+        LoginPostRequest loginRequest = new LoginPostRequest();
+        loginRequest.username = "user";
+        loginRequest.password = "Valid123";
+        boolean result = loginRequest.validateLogin();
+        assertFalse(result, "Expected false for username length less than 6");
+    }
+    @Tag("invalid")
+    public void testPasswordLengthLessThanSix() {
+        LoginPostRequest loginRequest = new LoginPostRequest();
+        loginRequest.username = "validUser";
+        loginRequest.password = "Valid";
+        boolean result = loginRequest.validateLogin();
+        assertFalse(result, "Expected false for password length less than 6");
+    }
+    @Tag("invalid")
+    public void testPasswordWithoutLetters() {
+        LoginPostRequest loginRequest = new LoginPostRequest();
+        loginRequest.username = "validUser";
+        loginRequest.password = "123456";
+        boolean result = loginRequest.validateLogin();
+        assertFalse(result, "Expected false for password without letters");
+    }
+    @Tag("invalid")
+    public void testPasswordWithoutDigits() {
+        LoginPostRequest loginRequest = new LoginPostRequest();
+        loginRequest.username = "validUser";
+        loginRequest.password = "ValidPassword";
+        boolean result = loginRequest.validateLogin();
+        assertFalse(result, "Expected false for password without digits");
+    }
+    @Tag("invalid")
+    public void testBothUsernameAndPasswordLessThanSix() {
+        LoginPostRequest loginRequest = new LoginPostRequest();
+        loginRequest.username = "user";
+        loginRequest.password = "Valid";
+        boolean result = loginRequest.validateLogin();
+        assertFalse(result, "Expected false for both username and password less than 6");
+    }
+    @Tag("invalid")
+    public void testEmptyUsername() {
+        LoginPostRequest loginRequest = new LoginPostRequest();
+        loginRequest.username = "";
+        loginRequest.password = "Valid123";
+        boolean result = loginRequest.validateLogin();
+        assertFalse(result, "Expected false for empty username");
+    }
+    @Tag("invalid")
+    public void testEmptyPassword() {
+        LoginPostRequest loginRequest = new LoginPostRequest();
+        loginRequest.username = "validUser";
+        loginRequest.password = "";
+        boolean result = loginRequest.validateLogin();
+        assertFalse(result, "Expected false for empty password");
+    }
+    @Tag("invalid")
+    public void testBothUsernameAndPasswordEmpty() {
+        LoginPostRequest loginRequest = new LoginPostRequest();
+        loginRequest.username = "";
+        loginRequest.password = "";
+        boolean result = loginRequest.validateLogin();
+        assertFalse(result, "Expected false for both username and password empty");
+    }
+    @Tag("valid")
+    public void testUsernameWithSpecialCharacters() {
+        LoginPostRequest loginRequest = new LoginPostRequest();
+        loginRequest.username = "valid_User#123";
+        loginRequest.password = "Valid123";
+        boolean result = loginRequest.validateLogin();
+        assertTrue(result, "Expected true for username with special characters");
+    }
+    @Tag("invalid")
+    public void testPasswordWithoutLettersAndDigits() {
+        LoginPostRequest loginRequest = new LoginPostRequest();
+        loginRequest.username = "validUser";
+        loginRequest.password = "!@#$%^&*()";
+        boolean result = loginRequest.validateLogin();
+        assertFalse(result, "Expected false for password without letters and digits");
+    }
+}
