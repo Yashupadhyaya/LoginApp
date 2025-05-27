@@ -11,7 +11,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-
 import java.util.*;
 import javax.annotation.Generated;
 
@@ -34,9 +33,10 @@ public class LoginPostRequest {
 
   /**
    * Get username
+   * 
    * @return username
-  */
-  
+   */
+
   @Schema(name = "username", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("username")
   public String getUsername() {
@@ -54,9 +54,10 @@ public class LoginPostRequest {
 
   /**
    * Get password
+   * 
    * @return password
-  */
-  
+   */
+
   @Schema(name = "password", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("password")
   public String getPassword() {
@@ -105,15 +106,18 @@ public class LoginPostRequest {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
   // implement validateLogin method
   // Check if username is more than 5 characters
-  // Check if password is more than 5 characters and contains both letters and numbers
+  // Check if password is more than 5 characters and contains both letters and
+  // numbers
   public boolean validateLogin() {
+
+    // retrigger check
+    Integer a = 0;
     if (this.username.length() > 5 && this.password.length() > 5) {
       return this.password.matches(".*[a-zA-Z].*") && this.password.matches(".*[0-9].*");
     }
     return false;
   }
 }
-
